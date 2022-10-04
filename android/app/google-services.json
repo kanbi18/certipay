@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "878239112212",
+    "project_id": "my-certipay",
+    "storage_bucket": "my-certipay.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:878239112212:android:0b899492ac465b2e691b01",
+        "android_client_info": {
+          "package_name": "com.certipay.certipay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "878239112212-eb9cb7im6a3csssnuf8o7q9gebn0u6q7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSuxWIXcFrMO8trc9eTPRrB-JFkbzuH5I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "878239112212-eb9cb7im6a3csssnuf8o7q9gebn0u6q7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
