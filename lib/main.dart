@@ -1,10 +1,10 @@
+import 'package:certipay/views/auth/verify_email_view.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:certipay/firebase_options.dart';
-import 'package:certipay/views/login_view.dart';
-import 'package:certipay/views/register_view.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:certipay/views/auth/login_view.dart';
+import 'package:certipay/views/auth/register_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,6 +14,11 @@ void main() {
       primarySwatch: Colors.blue,
     ),
     home: const HomePage(),
+    routes: {
+      "/login": (context) => const LoginView(),
+      "/register": (context) => const RegisterView(),
+      "/verify-email": (context) => const VerifyEmailView()
+    },
   ));
 }
 
@@ -22,28 +27,28 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Home"),
-      ),
-      body: FutureBuilder(
-        future: Firebase.initializeApp(
-            options: DefaultFirebaseOptions.currentPlatform),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              final user = FirebaseAuth.instance.currentUser;
-              if (user?.emailVerified ?? false) {
-                print("You are verified");
+    return FutureBuilder(
+      future: Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform),
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.done:
+            final user = FirebaseAuth.instance.currentUser;
+            print(user);
+            if (user != null) {
+              if (user.emailVerified) {
+                /** Move into app screen */
+                return const Text("Done");
               } else {
-                print("Verify your email");
+                return const VerifyEmailView();
               }
-              return const Text("Done");
-            default:
-              return const Text("Loading...");
-          }
-        },
-      ),
+            } else {
+              return const LoginView();
+            }
+          default:
+            return const CircularProgressIndicator();
+        }
+      },
     );
   }
 }
