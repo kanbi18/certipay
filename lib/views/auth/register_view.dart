@@ -78,6 +78,8 @@ class _RegisterViewState extends State<RegisterView> {
                         // } else {
                         //   print('${e.code} happened');
                         // }
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            "/login", (route) => false);
                       }
                     },
                     child: const Text("Register"),

@@ -1,4 +1,5 @@
 import 'package:certipay/views/auth/verify_email_view.dart';
+import 'package:certipay/views/main-ui/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,7 +18,8 @@ void main() {
     routes: {
       "/login": (context) => const LoginView(),
       "/register": (context) => const RegisterView(),
-      "/verify-email": (context) => const VerifyEmailView()
+      "/verify-email": (context) => const VerifyEmailView(),
+      "/home": (context) => const HomeView()
     },
   ));
 }
@@ -38,7 +40,7 @@ class HomePage extends StatelessWidget {
             if (user != null) {
               if (user.emailVerified) {
                 /** Move into app screen */
-                return const Text("Done");
+                return const LoginView();
               } else {
                 return const VerifyEmailView();
               }

@@ -69,6 +69,7 @@ class _LoginViewState extends State<LoginView> {
                 // } else {
                 //   print('${e.code} happened');
                 // }
+                Navigator.of(context).pushNamed("/home");
               }
             },
             child: const Text("Login"),
