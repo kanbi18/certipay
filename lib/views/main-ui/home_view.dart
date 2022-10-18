@@ -16,74 +16,41 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Main UI'),
-        actions: [
-          PopupMenuButton<MenuAction>(
-            onSelected: (value) async {
-              switch (value) {
-                case MenuAction.logout:
-                  final shouldLogout = await showLogOutDialog(context);
-                  if (shouldLogout) {
-                    await AuthService.firebase().logOut();
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      loginRoute,
-                      (_) => false,
-                    );
-                  }
-                  break;
-                case MenuAction.profile:
-                  Navigator.of(context).pushNamed(profileRoute);
-                  break;
-                case MenuAction.settings:
-                  Navigator.of(context).pushNamed(settingsRoute);
-                  break;
-              }
-            },
-            itemBuilder: (context) {
-              return const [
-                PopupMenuItem<MenuAction>(
-                  value: MenuAction.profile,
-                  child: Text('Profile'),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            const DrawerHeader(
+              decoration: BoxDecoration(color: Colors.blue),
+              child: Text(
+                'Hello, Stranger',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
                 ),
-                PopupMenuItem<MenuAction>(
-                  value: MenuAction.settings,
-                  child: Text('Settings'),
-                ),
-                PopupMenuItem<MenuAction>(
-                  value: MenuAction.logout,
-                  child: Text('Log out'),
-                ),
-              ];
-            },
-          ),
-        ],
+              ),
+            ),
+            const ListTile(
+              leading: Icon(Icons.message),
+              title: Text('Messages'),
+            ),
+            const ListTile(
+              leading: Icon(Icons.people),
+              title: Text('Friends'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.account_circle),
+              title: const Text('Profile'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.of(context).pushNamed(profileRoute);
+              },
+            ),
+          ],
+        ),
       ),
       body: const Text('Hello world'),
     );
   }
-}
-
-Future<bool> showLogOutDialog(BuildContext context) {
-  return showDialog<bool>(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: const Text('Sign out'),
-        content: const Text('Are you sure you want to sign out?'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(false);
-            },
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(true);
-            },
-            child: const Text('Log out'),
-          ),
-        ],
-      );
-    },
-  ).then((value) => value ?? false);
 }
