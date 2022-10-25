@@ -4,3 +4,6 @@ const homeRoute = "/home";
 const verifyEmailRoute = "/verify-email";
 const settingsRoute = "/settings";
 const profileRoute = "/profile";
+const setupRoute = "/setup";
+const createContractRoute = "/create-contract";
+const contractListRoute = "/contract-list";

@@ -10,7 +10,8 @@ class ProfilePicture extends StatefulWidget {
 }
 
 class _ProfilePictureState extends State<ProfilePicture> {
-  final user = AuthService.firebase().currentUser ?? AuthUser(false, "");
+  final user = AuthService.firebase().currentUser ??
+      AuthUser(id: "", email: "", isEmailVerified: false);
   late String profileName;
   @override
   void initState() {
