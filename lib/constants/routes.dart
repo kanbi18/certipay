@@ -6,4 +6,5 @@ const settingsRoute = "/settings";
 const profileRoute = "/profile";
 const setupRoute = "/setup";
 const createContractRoute = "/create-contract";
+const contractsRoute = "/contracts";
 const contractListRoute = "/contract-list";

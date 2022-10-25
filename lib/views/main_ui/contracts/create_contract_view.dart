@@ -1,5 +1,7 @@
 import 'package:certipay/utilities/generics/get_arguments.dart';
+import 'package:certipay/utilities/screens/loading/loading_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:certipay/constants/colors.dart' as theme;
 import 'package:certipay/services/auth/auth_service.dart';
 import 'package:certipay/services/contracts/contract.dart';
 import 'package:certipay/services/cloud/firebase_cloud_storage.dart';
@@ -19,7 +21,7 @@ class _CreateContractViewState extends State<CreateContractView> {
   late final FirebaseCloudStorage _cloudStorage;
   late final TextEditingController _titleController;
   late final TextEditingController _descriptionController;
-  late final String _category;
+  late String _category;
 
   @override
   void initState() {
@@ -55,7 +57,7 @@ class _CreateContractViewState extends State<CreateContractView> {
     _titleController.addListener(_textControllerListener);
   }
 
-  Future<Contract> createOrGetExistingContract(BuildContext context) async {
+  Future<Contract> createContract(BuildContext context) async {
     final widgetContract = context.getArgument<Contract>();
 
     if (widgetContract != null) {
@@ -109,59 +111,62 @@ class _CreateContractViewState extends State<CreateContractView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(theme.backgroundColor),
       appBar: AppBar(
         title: const Text(
           "Contract",
         ),
       ),
-      body: FutureBuilder(
-        future: createOrGetExistingContract(context),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              _setupTextControllerListener();
-              return Column(children: [
-                TextField(
-                    controller: _titleController,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    decoration: const InputDecoration(
-                      hintText: "Contract Title",
-                    )),
-                TextField(
-                    controller: _descriptionController,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    decoration: const InputDecoration(
-                      hintText: "Contract Description",
-                    )),
-                DropdownButton<String>(
-                    isExpanded: true,
-                    value: _category,
-                    style: const TextStyle(
-                      color: Colors.black,
-                    ),
-                    elevation: 16,
-                    underline: const SizedBox(),
-                    items: widget.categories
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                          ));
-                    }).toList(),
-                    onChanged: (String? value) {
-                      setState(() {
-                        _category = value!;
-                      });
-                    })
-              ]);
-            default:
-              return const CircularProgressIndicator();
-          }
-        },
-      ),
+      body: Column(children: [
+        TextField(
+            controller: _titleController,
+            keyboardType: TextInputType.multiline,
+            maxLines: null,
+            decoration: const InputDecoration(
+              hintText: "Contract Title",
+            )),
+        TextField(
+            controller: _descriptionController,
+            keyboardType: TextInputType.multiline,
+            maxLines: null,
+            decoration: const InputDecoration(
+              hintText: "Contract Description",
+            )),
+        DropdownButton<String>(
+            isExpanded: true,
+            value: _category,
+            style: const TextStyle(
+              color: Colors.black,
+            ),
+            elevation: 16,
+            underline: const SizedBox(),
+            items:
+                widget.categories.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(
+                    value,
+                  ));
+            }).toList(),
+            onChanged: (String? value) {
+              setState(() {
+                _category = value!;
+              });
+            }),
+        TextButton(
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: Color(theme.buttonColor),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: (() {
+              createContract(context);
+            }),
+            child: const Text("Confirm"))
+      ]),
     );
   }
 }

@@ -1,9 +1,10 @@
 import 'package:certipay/constants/routes.dart';
 import 'package:certipay/views/auth/verify_email_view.dart';
-import 'package:certipay/views/main-ui/contracts/contract_list_view.dart';
-import 'package:certipay/views/main-ui/contracts/create_contract_view.dart';
-import 'package:certipay/views/main-ui/home_view.dart';
-import 'package:certipay/views/main-ui/setup_view.dart';
+import 'package:certipay/views/main_ui/contracts/contract_list_view.dart';
+import 'package:certipay/views/main_ui/contracts/contracts_view.dart';
+import 'package:certipay/views/main_ui/contracts/create_contract_view.dart';
+import 'package:certipay/views/main_ui/home_view.dart';
+import 'package:certipay/views/main_ui/setup_view.dart';
 import 'package:certipay/views/staple/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:certipay/views/auth/login_view.dart';
@@ -37,7 +38,7 @@ void main() {
       homeRoute: (context) => const HomeView(),
       settingsRoute: (context) => const SettingsView(),
       createContractRoute: (context) => CreateContractView(),
-      contractListRoute: (context) => const ContractListView(),
+      contractsRoute: (context) => const ContractsView(),
       profileRoute: (context) => BlocProvider<AuthBloc>.value(
             value: AuthBloc(FirebaseAuthProvider()),
             child: const ProfileView(),

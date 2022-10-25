@@ -51,7 +51,7 @@ class FirebaseCloudStorage {
   Stream<Iterable<Contract>> getAllNotes({required String owner}) {
     return contracts.snapshots().map((event) => event.docs
         .map((doc) => Contract.fromSnapshot(doc))
-        .where((contract) => contract.owners.contains(owner)));
+        .where((contract) => contract.owners!.contains(owner)));
   }
 
   Future<void> updateContract(

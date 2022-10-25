@@ -1,3 +1,4 @@
+import 'package:certipay/views/main_ui/contracts/contracts_view.dart';
 import 'package:flutter/material.dart';
 import 'package:certipay/constants/routes.dart';
 import 'package:certipay/enums/menu_actions.dart';
@@ -76,6 +77,15 @@ class _HomeViewState extends State<HomeView> {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.of(context).pushNamed(profileRoute);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.account_circle),
+              title: const Text('My Contracts'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(contractsRoute, (route) => false);
               },
             ),
           ],
