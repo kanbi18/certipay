@@ -25,8 +25,12 @@ void main() {
   runApp(MaterialApp(
     title: 'Flutter Demo',
     theme: ThemeData(
-      primarySwatch: Colors.blue,
-    ),
+        //primarySwatch: Colors.indigo,
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color(0xFF7879F1),
+            secondary: const Color(0xFF40e0d0)),
+        // colorSchemeSeed: const Color(0xFF7879F1),
+        useMaterial3: true),
     home: BlocProvider<AuthBloc>(
       create: (context) => authBloc,
       child: const HomePage(),
@@ -76,7 +80,7 @@ class HomePage extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is AuthStateLoggedIn) {
-          return const SetupView();
+          return const HomeView();
         } else if (state is AuthStateNeedsVerification) {
           return const VerifyEmailView();
         } else if (state is AuthStateLoggedOut) {

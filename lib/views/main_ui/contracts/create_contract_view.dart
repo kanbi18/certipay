@@ -1,7 +1,7 @@
 import 'package:certipay/utilities/generics/get_arguments.dart';
 import 'package:certipay/utilities/screens/loading/loading_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:certipay/constants/colors.dart' as theme;
+import 'package:certipay/constants/app_theme.dart';
 import 'package:certipay/services/auth/auth_service.dart';
 import 'package:certipay/services/contracts/contract.dart';
 import 'package:certipay/services/cloud/firebase_cloud_storage.dart';
@@ -75,7 +75,7 @@ class _CreateContractViewState extends State<CreateContractView> {
     final newContract = await _cloudStorage.createContract(
         title: _titleController.text,
         description: _descriptionController.text,
-        category: Category.generic,
+        category: categoryMap[_category.toLowerCase()]!,
         owners: [userId],
         stakeholders: []);
     _contract = newContract;
@@ -111,10 +111,10 @@ class _CreateContractViewState extends State<CreateContractView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(theme.backgroundColor),
+      backgroundColor: Color(AppTheme.backgroundColor),
       appBar: AppBar(
         title: const Text(
-          "Contract",
+          "New Contract",
         ),
       ),
       body: Column(children: [
@@ -153,10 +153,13 @@ class _CreateContractViewState extends State<CreateContractView> {
                 _category = value!;
               });
             }),
+        const SizedBox(
+          height: 50,
+        ),
         TextButton(
             style: TextButton.styleFrom(
               foregroundColor: Colors.white,
-              backgroundColor: Color(theme.buttonColor),
+              backgroundColor: Color(AppTheme.buttonColor),
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -164,6 +167,7 @@ class _CreateContractViewState extends State<CreateContractView> {
             ),
             onPressed: (() {
               createContract(context);
+              Navigator.of(context).pop();
             }),
             child: const Text("Confirm"))
       ]),

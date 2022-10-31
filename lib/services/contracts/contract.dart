@@ -52,10 +52,15 @@ class Contract {
 
 enum Category { health, sports, habits, generic }
 
+final categoryMap = {
+  "health": Category.health,
+  "sports": Category.sports,
+  "habits": Category.habits,
+  "generic": Category.generic,
+};
+
 Category categoryFromString(String category) {
-  return Category.values.firstWhere(
-      (e) => e.toString() == "Category.{category}",
-      orElse: () => Category.generic);
+  return categoryMap[category]!;
 }
 
 List<String> getString(List<dynamic> snapshot) {

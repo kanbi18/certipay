@@ -16,9 +16,12 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Main UI'),
+        backgroundColor: colorScheme.primary,
         actions: [
           IconButton(
             onPressed: () {
@@ -53,9 +56,9 @@ class _HomeViewState extends State<HomeView> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(color: Colors.blue),
-              child: Text(
+            DrawerHeader(
+              decoration: BoxDecoration(color: colorScheme.primary),
+              child: const Text(
                 'Hello, Stranger',
                 style: TextStyle(
                   color: Colors.white,
@@ -79,19 +82,10 @@ class _HomeViewState extends State<HomeView> {
                 Navigator.of(context).pushNamed(profileRoute);
               },
             ),
-            ListTile(
-              leading: const Icon(Icons.account_circle),
-              title: const Text('My Contracts'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil(contractsRoute, (route) => false);
-              },
-            ),
           ],
         ),
       ),
-      body: const Text('Hello world'),
+      body: const ContractsView(),
     );
   }
 }
