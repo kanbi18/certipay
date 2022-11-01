@@ -1,6 +1,7 @@
 import 'package:certipay/constants/routes.dart';
+import 'package:certipay/utilities/buttons/generic_button.dart';
 import 'package:flutter/material.dart';
-import 'package:certipay/constants/colors.dart' as theme;
+import 'package:certipay/constants/app_theme.dart';
 
 class SetupView extends StatefulWidget {
   const SetupView({super.key});
@@ -13,7 +14,7 @@ class _SetupViewState extends State<SetupView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(theme.backgroundColor),
+        backgroundColor: Color(AppTheme.backgroundColor),
         body: Container(
           alignment: Alignment.center,
           margin: const EdgeInsets.all(20.0),
@@ -23,7 +24,7 @@ class _SetupViewState extends State<SetupView> {
             children: [
               Text("Welcome! Let's begin setup.",
                   style: TextStyle(
-                      color: Color(theme.buttonColor),
+                      color: Color(AppTheme.buttonColor),
                       fontSize: 24,
                       fontFamily: "Montserrat")),
               const SetupItem(
@@ -42,21 +43,25 @@ class _SetupViewState extends State<SetupView> {
                   helperText: "Based on use case:",
                   icon: Icons.paid_outlined,
                   options: ["One", "Two", "Three"]),
-              TextButton(
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: Color(theme.buttonColor),
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 100),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  onPressed: (() {
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil(homeRoute, (_) => false);
-                  }),
-                  child: const Text("Confirm"))
+              GenericButton(
+                  onPressed: () => Navigator.of(context)
+                      .pushNamedAndRemoveUntil(homeRoute, (_) => false),
+                  text: "Confirm"),
+              // TextButton(
+              //     style: TextButton.styleFrom(
+              //       foregroundColor: Colors.white,
+              //       backgroundColor: Color(theme.buttonColor),
+              //       padding: const EdgeInsets.symmetric(
+              //           vertical: 20, horizontal: 100),
+              //       shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(10),
+              //       ),
+              //     ),
+              //     onPressed: (() {
+              //       Navigator.of(context)
+              //           .pushNamedAndRemoveUntil(homeRoute, (_) => false);
+              //     }),
+              //     child: const Text("Confirm"))
             ],
           ),
         ));

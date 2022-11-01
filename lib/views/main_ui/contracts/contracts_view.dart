@@ -21,37 +21,17 @@ class ContractsView extends StatefulWidget {
 class _ContractsViewState extends State<ContractsView> {
   late final FirebaseCloudStorage _cloudStorage;
   String get userId => AuthService.firebase().currentUser!.id;
-
+  late Stream<Iterable<Contract>> contractStream;
   @override
   void initState() {
     _cloudStorage = FirebaseCloudStorage();
     super.initState();
+    contractStream = _cloudStorage.getAllNotes(owner: userId);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: StreamBuilder(
-          stream: _cloudStorage.getAllNotes(owner: userId).getLength,
-          builder: (context, AsyncSnapshot<int> snapshot) {
-            if (snapshot.hasData) {
-              final contractCount = snapshot.data ?? 0;
-              return Text("$contractCount contracts");
-            } else {
-              return const Text("0 contracts");
-            }
-          },
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed(createContractRoute);
-            },
-            icon: const Icon(Icons.add),
-          ),
-        ],
-      ),
       body: StreamBuilder(
         stream: _cloudStorage.getAllNotes(owner: userId),
         builder: (context, snapshot) {
@@ -59,21 +39,9 @@ class _ContractsViewState extends State<ContractsView> {
             case ConnectionState.waiting:
             case ConnectionState.active:
               if (snapshot.hasData) {
-                print("Test");
                 final allContracts = snapshot.data as Iterable<Contract>;
-                print(allContracts);
                 return ContractListView(
                   contracts: allContracts,
-                  onCancelContract: (contract) async {
-                    await _cloudStorage.deleteContract(
-                        contractId: contract.contractId);
-                  },
-                  onTap: (contract) {
-                    Navigator.of(context).pushNamed(
-                      createContractRoute,
-                      arguments: contract,
-                    );
-                  },
                 );
               } else {
                 return const CircularProgressIndicator();
@@ -89,4 +57,20 @@ class _ContractsViewState extends State<ContractsView> {
 
 extension Count<T extends Iterable> on Stream<T> {
   Stream<int> get getLength => map((event) => event.length);
+}
+
+class CategoryChip extends StatelessWidget {
+  const CategoryChip({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ActionChip(
+      avatar: CircleAvatar(
+        backgroundColor: Colors.grey.shade800,
+        child: const Text('AB'),
+      ),
+      label: const Text('Aaron Burr'),
+      onPressed: () {},
+    );
+  }
 }

@@ -21,7 +21,7 @@ class FirebaseCloudStorage {
     final contractRef = await contracts.add({
       titleFieldName: title,
       descriptionFieldName: description,
-      categoryFieldName: category,
+      categoryFieldName: category.name,
       ownersFieldName: owners,
       stakeholdersFieldName: stakeholders,
       lastUpdatedFieldName: DateTime.now()
