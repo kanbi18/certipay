@@ -126,8 +126,4 @@ app.*.symbols
 !/dev/ci/**/Gemfile.lock
 
 #security
-<<<<<<< HEAD
 lib/firebase_options.dart
-=======
-lib/firebase_options.dart
->>>>>>> c143148309c514201b579be8154388e66f39b12a
