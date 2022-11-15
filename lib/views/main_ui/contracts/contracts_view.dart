@@ -58,19 +58,3 @@ class _ContractsViewState extends State<ContractsView> {
 extension Count<T extends Iterable> on Stream<T> {
   Stream<int> get getLength => map((event) => event.length);
 }
-
-class CategoryChip extends StatelessWidget {
-  const CategoryChip({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ActionChip(
-      avatar: CircleAvatar(
-        backgroundColor: Colors.grey.shade800,
-        child: const Text('AB'),
-      ),
-      label: const Text('Aaron Burr'),
-      onPressed: () {},
-    );
-  }
-}
