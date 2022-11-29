@@ -58,7 +58,6 @@ class _LoginViewState extends State<LoginView> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const Text("Login"),
                 TextField(
                   controller: _email,
                   enableSuggestions: false,

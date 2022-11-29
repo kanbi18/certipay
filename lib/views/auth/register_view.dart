@@ -69,7 +69,6 @@ class _RegisterViewState extends State<RegisterView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Register view'),
                 TextField(
                   controller: _email,
                   enableSuggestions: false,

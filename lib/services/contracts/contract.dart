@@ -18,7 +18,7 @@ class Contract {
     required this.owners,
     required this.lastUpdated,
     this.description,
-    this.category = Category.generic,
+    this.category = Category.Generic,
     this.stakeholders,
   });
 
@@ -50,13 +50,13 @@ class Contract {
   }
 }
 
-enum Category { health, sports, habits, generic }
+enum Category { Health, Sports, Habits, Generic }
 
 final categoryMap = {
-  "health": Category.health,
-  "sports": Category.sports,
-  "habits": Category.habits,
-  "generic": Category.generic,
+  "Health": Category.Health,
+  "Sports": Category.Sports,
+  "Habits": Category.Habits,
+  "Generic": Category.Generic,
 };
 
 Category categoryFromString(String category) {

@@ -54,6 +54,32 @@ class FirebaseCloudStorage {
         .where((contract) => contract.owners!.contains(owner)));
   }
 
+  Stream<Iterable<Contract>> getAllNotesFromCategory(
+      {required String owner, required List<String> categories}) {
+    return contracts.snapshots().map((event) =>
+        event.docs.map((doc) => Contract.fromSnapshot(doc)).where((contract) {
+          return contract.owners!.contains(owner) &&
+              categories.contains(contract.category.name);
+        }));
+  }
+
+  Future<Iterable<Contract>> getNotesFromCategory(
+      {required String owner, required List<String> category}) {
+    // (contract) =>
+    //     contract.owners!.contains(owner) &&
+    //     category.contains(contract.category.name)
+    try {
+      return contracts
+          .where(ownersFieldName, arrayContains: owner)
+          .get()
+          .then((value) => value.docs.map(
+                (snapshot) => Contract.fromSnapshot(snapshot),
+              ));
+    } catch (e) {
+      throw CouldNotGetAllNotesException();
+    }
+  }
+
   Future<void> updateContract(
       {required String contractId, required String text}) async {
     try {

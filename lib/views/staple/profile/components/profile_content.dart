@@ -51,17 +51,6 @@ class ProfileContent extends StatelessWidget {
               icon: const Icon(Icons.supervised_user_circle),
               onPressed: () {},
             ),
-            ProfileItem(
-                text: "Log Out",
-                icon: const Icon(Icons.supervised_user_circle),
-                onPressed: () async {
-                  final shouldLogout = await showLogOutDialog(context);
-                  if (shouldLogout) {
-                    context.read<AuthBloc>().add(
-                          const AuthEventLogOut(),
-                        );
-                  }
-                }),
           ],
         ),
       ),

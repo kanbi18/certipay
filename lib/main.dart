@@ -1,4 +1,5 @@
 import 'package:certipay/constants/routes.dart';
+import 'package:certipay/utilities/models/contracts_model.dart';
 import 'package:certipay/views/auth/verify_email_view.dart';
 import 'package:certipay/views/main_ui/contracts/contract_list_view.dart';
 import 'package:certipay/views/main_ui/contracts/contracts_view.dart';
@@ -17,6 +18,7 @@ import 'package:certipay/services/auth/bloc/auth_event.dart';
 import 'package:certipay/services/auth/bloc/auth_state.dart';
 import 'package:certipay/services/auth/firebase_auth_provider.dart';
 import 'package:certipay/utilities/screens/loading/loading_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +26,7 @@ void main() {
   final authBloc = AuthBloc(FirebaseAuthProvider());
   runApp(MaterialApp(
     title: 'Flutter Demo',
-    theme: ThemeData(
+    theme: ThemeData.from(
         //primarySwatch: Colors.indigo,
         colorScheme: ColorScheme.fromSeed(
             seedColor: const Color(0xFF7879F1),
@@ -33,7 +35,8 @@ void main() {
         useMaterial3: true),
     home: BlocProvider<AuthBloc>(
       create: (context) => authBloc,
-      child: const HomePage(),
+      child: ChangeNotifierProvider(
+          create: (context) => ContractsModel(), child: const HomePage()),
     ),
     routes: {
       loginRoute: (context) => const LoginView(),
@@ -42,9 +45,13 @@ void main() {
       homeRoute: (context) => const HomeView(),
       settingsRoute: (context) => const SettingsView(),
       createContractRoute: (context) => CreateContractView(),
-      contractsRoute: (context) => const ContractsView(),
-      profileRoute: (context) => BlocProvider<AuthBloc>.value(
-            value: AuthBloc(FirebaseAuthProvider()),
+      contractsRoute: (context) => ContractsView(),
+      // profileRoute: (context) => BlocProvider<AuthBloc>.value(
+      //       value: AuthBloc(FirebaseAuthProvider()),
+      //       child: const ProfileView(),
+      //     ),
+      profileRoute: (context) => BlocProvider<AuthBloc>(
+            create: (context) => AuthBloc(FirebaseAuthProvider()),
             child: const ProfileView(),
           ),
       //profileRoute: (context) => const ProfileView(),
